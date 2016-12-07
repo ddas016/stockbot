@@ -25,7 +25,7 @@ public class BasicLuisDialog : LuisDialog<object>
     // Go to https://luis.ai and create a new intent, then train/publish your luis app.
     // Finally replace "MyIntent" with the name of your newly created intent in the following handler
     [LuisIntent("StockPrice")]
-    public async Task MyIntent(IDialogContext context, LuisResult result)
+    public async Task StockPrice(IDialogContext context, LuisResult result)
     {
         await context.PostAsync($"You have reached the StockPrice intent. You said: {result.Query}"); //
         context.Wait(MessageReceived);
@@ -33,7 +33,7 @@ public class BasicLuisDialog : LuisDialog<object>
 
 
     [LuisIntent("StockPrice2")]
-    public async Task MyIntent(IDialogContext context, LuisResult result)
+    public async Task StockPrice2(IDialogContext context, LuisResult result)
     {
 
         await context.PostAsync($"You have reached the StockPrice2 intent. You said: {result.Query}"); //
