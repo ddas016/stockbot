@@ -17,7 +17,7 @@ public class BasicLuisDialog : LuisDialog<object>
     [LuisIntent("None")]
     public async Task NoneIntent(IDialogContext context, LuisResult result)
     {
-        await context.PostAsync($"You have reached the none intent. You said: {result.Query}"); //
+        await context.PostAsync($"You have reached the none intent. You said: {result.Intent}"); //
         context.Wait(MessageReceived);
     }
 
@@ -27,7 +27,7 @@ public class BasicLuisDialog : LuisDialog<object>
     [LuisIntent("StockPrice")]
     public async Task StockPrice(IDialogContext context, LuisResult result)
     {
-        await context.PostAsync($"You have reached the StockPrice intent. You meant: {result}"); //
+        await context.PostAsync($"You have reached the StockPrice intent. You meant: {result.Intent}"); //
         context.Wait(MessageReceived);
     }
 
