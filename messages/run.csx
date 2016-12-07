@@ -1,5 +1,6 @@
 #r "Newtonsoft.Json"
 #load "BasicLuisDialog.csx"
+#load "YahooStock.cs"
 
 using System;
 using System.Net;

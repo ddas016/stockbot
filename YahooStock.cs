@@ -5,37 +5,35 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace StockInfoProvider
+
+public class YahooStock
 {
-    public class YahooStock
+    public static async Task<double?> GetStockRateAsync(string StockSymbol)
     {
-        public static async Task<double?> GetStockRateAsync(string StockSymbol)
+        try
         {
-            try
+            string ServiceURL = $"http://finance.yahoo.com/d/quotes.csv?s={StockSymbol}&f=sl1d1nd";
+            string ResultInCSV;
+            using (WebClient client = new WebClient())
             {
-                string ServiceURL = $"http://finance.yahoo.com/d/quotes.csv?s={StockSymbol}&f=sl1d1nd";
-                string ResultInCSV;
-                using (WebClient client = new WebClient())
-                {
-                    ResultInCSV = await client.DownloadStringTaskAsync(ServiceURL).ConfigureAwait(false);
-                }
-                var FirstLine = ResultInCSV.Split('\n')[0];
-                var Price = FirstLine.Split(',')[1];
-                if (Price != null && Price.Length >= 0)
-                {
-                    double result;
-                    if (double.TryParse(Price, out result))
-                    {
-                        return result;
-                    }
-                }
-                return null;
+                ResultInCSV = await client.DownloadStringTaskAsync(ServiceURL).ConfigureAwait(false);
             }
-            catch (WebException ex)
+            var FirstLine = ResultInCSV.Split('\n')[0];
+            var Price = FirstLine.Split(',')[1];
+            if (Price != null && Price.Length >= 0)
             {
-                //handle your exception here  
-                throw ex;
+                double result;
+                if (double.TryParse(Price, out result))
+                {
+                    return result;
+                }
             }
+            return null;
+        }
+        catch (WebException ex)
+        {
+            //handle your exception here  
+            throw ex;
         }
     }
 }
