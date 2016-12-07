@@ -35,6 +35,7 @@ public class BasicLuisDialog : LuisDialog<object>
     [LuisIntent("StockPrice2")]
     public async Task MyIntent(IDialogContext context, LuisResult result)
     {
+
         await context.PostAsync($"You have reached the StockPrice2 intent. You said: {result.Query}"); //
         context.Wait(MessageReceived);
     }
