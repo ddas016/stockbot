@@ -20,7 +20,7 @@ public class BasicLuisDialog : LuisDialog<object>
     [LuisIntent("None")]
     public async Task NoneIntent(IDialogContext context, LuisResult result)
     {
-        double? stockprice =  YahooStock.GetStockRateAsync(result.Entities[0].Entity);
+        double? stockprice = await YahooStock.GetStockRateAsync(result.Entities[0].Entity);
         Console.WriteLine($"stock price : {stockprice}");
         await context.PostAsync($"You have reached the StockPrice intent. You meant: {stockprice}"); //
         context.Wait(MessageReceived);
@@ -32,7 +32,7 @@ public class BasicLuisDialog : LuisDialog<object>
     [LuisIntent("StockPrice")]
     public async Task StockPrice(IDialogContext context, LuisResult result)
     {
-        double? stockprice =  YahooStock.GetStockRateAsync(result.Entities[0].Entity);
+        double? stockprice = await YahooStock.GetStockRateAsync(result.Entities[0].Entity);
         Console.WriteLine($"stock price : {stockprice}");
         await context.PostAsync($"You have reached the StockPrice intent. You meant: {stockprice}"); //
         context.Wait(MessageReceived);
