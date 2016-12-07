@@ -13,7 +13,7 @@ public class BasicLuisDialog : LuisDialog<object>
     public BasicLuisDialog() : base(new LuisService(new LuisModelAttribute(Utils.GetAppSetting("LuisAppId"), Utils.GetAppSetting("LuisAPIKey"))))
     {
     }
-
+    
     [LuisIntent("None")]
     public async Task NoneIntent(IDialogContext context, LuisResult result)
     {
@@ -23,10 +23,18 @@ public class BasicLuisDialog : LuisDialog<object>
 
     // Go to https://luis.ai and create a new intent, then train/publish your luis app.
     // Finally replace "MyIntent" with the name of your newly created intent in the following handler
-    [LuisIntent("MyIntent")]
+    [LuisIntent("StockPrice")]
     public async Task MyIntent(IDialogContext context, LuisResult result)
     {
-        await context.PostAsync($"You have reached the MyIntent intent. You said: {result.Query}"); //
+        await context.PostAsync($"You have reached the StockPrice intent. You said: {result.Query}"); //
+        context.Wait(MessageReceived);
+    }
+
+
+    [LuisIntent("StockPrice2")]
+    public async Task MyIntent(IDialogContext context, LuisResult result)
+    {
+        await context.PostAsync($"You have reached the StockPrice2 intent. You said: {result.Query}"); //
         context.Wait(MessageReceived);
     }
 }
