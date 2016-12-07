@@ -53,8 +53,14 @@ public class BasicLuisDialog : LuisDialog<object>
     [LuisIntent("StockPrice2")]
     public async Task StockPrice2(IDialogContext context, LuisResult result)
     {
-        await context.PostAsync($"You have reached the StockPrice2 intent. You meant: {await YahooStock.GetStockRateAsync(result.Entities[0].Entity)}"); //
-        //await context.PostAsync($"You have reached the StockPrice2 intent. You meant: {result.Entities[0].Entity}"); //
+        double? stockprice = await YahooStock.GetStockRateAsync(result.Entities[0].Entity);
+        Console.WriteLine($"stock price : {stockprice}");
+
+        if (stockprice != null)
+            await context.PostAsync($"You selcected stock {result.Entities[0].Entity}. stock price: {stockprice}"); //
+        else
+            await context.PostAsync($"You selcected stock {result.Entities[0].Entity}. Looks like it's not a valid symbol please check."); //
+
         context.Wait(MessageReceived);
     }
 }
