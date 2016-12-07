@@ -1,3 +1,5 @@
+#load "YahooStock.cs"
+
 using System;
 using System.Threading.Tasks;
 
