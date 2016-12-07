@@ -22,7 +22,12 @@ public class BasicLuisDialog : LuisDialog<object>
     {
         double? stockprice = await YahooStock.GetStockRateAsync(result.Entities[0].Entity);
         Console.WriteLine($"stock price : {stockprice}");
-        await context.PostAsync($"You have reached the StockPrice intent. You meant: {stockprice}"); //
+
+        if (stockprice)
+            await context.PostAsync($"You selcected stock {result.Entities[0].Entity}. stock price: {stockprice}"); //
+        else
+            await context.PostAsync($"You selcected stock {result.Entities[0].Entity}. Looks like it's not a valid symbol please check."); //
+
         context.Wait(MessageReceived);
     }
 
@@ -34,7 +39,12 @@ public class BasicLuisDialog : LuisDialog<object>
     {
         double? stockprice = await YahooStock.GetStockRateAsync(result.Entities[0].Entity);
         Console.WriteLine($"stock price : {stockprice}");
-        await context.PostAsync($"You have reached the StockPrice intent. You meant: {stockprice}"); //
+
+        if (stockprice)
+            await context.PostAsync($"You selcected stock {result.Entities[0].Entity}. stock price: {stockprice}"); //
+        else
+            await context.PostAsync($"You selcected stock {result.Entities[0].Entity}. Looks like it's not a valid symbol please check."); //
+
         context.Wait(MessageReceived);
     }
 
