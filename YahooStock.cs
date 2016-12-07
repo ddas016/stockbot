@@ -5,34 +5,37 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 
-public class YahooStock
+namespace StockInfoProvider
 {
-    public static async Task<double?> GetStockRateAsync(string StockSymbol)
+    public class YahooStock
     {
-        try
+        public static async Task<double?> GetStockRateAsync(string StockSymbol)
         {
-            string ServiceURL = $"http://finance.yahoo.com/d/quotes.csv?s={StockSymbol}&f=sl1d1nd";
-            string ResultInCSV;
-            using (WebClient client = new WebClient())
+            try
             {
-                ResultInCSV = await client.DownloadStringTaskAsync(ServiceURL).ConfigureAwait(false);
-            }
-            var FirstLine = ResultInCSV.Split('\n')[0];
-            var Price = FirstLine.Split(',')[1];
-            if (Price != null && Price.Length >= 0)
-            {
-                double result;
-                if (double.TryParse(Price, out result))
+                string ServiceURL = $"http://finance.yahoo.com/d/quotes.csv?s={StockSymbol}&f=sl1d1nd";
+                string ResultInCSV;
+                using (WebClient client = new WebClient())
                 {
-                    return result;
+                    ResultInCSV = await client.DownloadStringTaskAsync(ServiceURL).ConfigureAwait(false);
                 }
+                var FirstLine = ResultInCSV.Split('\n')[0];
+                var Price = FirstLine.Split(',')[1];
+                if (Price != null && Price.Length >= 0)
+                {
+                    double result;
+                    if (double.TryParse(Price, out result))
+                    {
+                        return result;
+                    }
+                }
+                return null;
             }
-            return null;
-        }
-        catch (WebException ex)
-        {
-            //handle your exception here  
-            throw ex;
+            catch (WebException ex)
+            {
+                //handle your exception here  
+                throw ex;
+            }
         }
     }
 }
